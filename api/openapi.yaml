@@ -6,9 +6,9 @@ info:
 servers:
   - url: https://virtserver.swaggerhub.com/SoftwareTechnology/Knitness/1.0.0
     description: SwaggerHub API Auto Mocking
-  - url: https://localhost:8080
+  - url: http://localhost:8080
     description: Localhost server
-  - url: https://knitness-production.up.railway.app
+  - url: knitness-production.up.railway.app
     description: RailWay server
 
 tags:
