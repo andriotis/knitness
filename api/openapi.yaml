@@ -1,0 +1,831 @@
+openapi: 3.0.0
+info:
+  title: Knitness
+  description: API documentation for Knitness app
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/SoftwareTechnology/Knitness/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/SoftwareTechnology/Knitness/1.0.0
+tags:
+- name: users
+  description: User specific requests
+- name: foods
+  description: Food specific requests
+- name: exercises
+  description: Exercise specific requests
+- name: recommendations
+  description: Recommendations specific requests
+- name: search
+  description: Search specific requests
+paths:
+  /users:
+    post:
+      tags:
+      - users
+      summary: Add a new user to the system.
+      description: FR*.
+      operationId: usersPOST
+      requestBody:
+        description: New user's email and password.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newUser'
+        required: true
+      responses:
+        "201":
+          description: New user created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "400":
+          description: Bad input parameter
+        "405":
+          description: Invalid input
+      security:
+      - JWTbearerAuth: []
+      x-swagger-router-controller: Users
+  /users/{id}:
+    get:
+      tags:
+      - users
+      summary: Retrieve a user's info using its id.
+      description: FR*.
+      operationId: usersIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user whose information are to be received.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Issue not found
+      security:
+      - JWTbearerAuth: []
+      x-swagger-router-controller: Users
+    put:
+      tags:
+      - users
+      summary: Update user based on his/her id.
+      operationId: usersIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user whose information are to be updated.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: User model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Issue not found
+      security:
+      - JWTbearerAuth: []
+      x-swagger-router-controller: Users
+    delete:
+      tags:
+      - users
+      summary: Delete a user based on his/her id.
+      operationId: usersIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user to be deleted.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad input parameter
+        "404":
+          description: User not found
+      security:
+      - JWTbearerAuth: []
+      x-swagger-router-controller: Users
+  /users/{id}/stats:
+    get:
+      tags:
+      - users
+      summary: Receive user's statistics based on his/her id.
+      operationId: usersIdStatsGET
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user whose statistics are to be received.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statistics'
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Resource not found
+      security:
+      - JWTbearerAuth: []
+      x-swagger-router-controller: Users
+  /users/{id}/equipment:
+    get:
+      tags:
+      - users
+      summary: Get user's equipment based on his/her id.
+      operationId: usersIdEquipmentGET
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user whose equipment is to be received.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - dumbell
+                - barbel
+                items:
+                  type: string
+                x-content-type: application/json
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Issue not found
+      security:
+      - JWTbearerAuth: []
+      x-swagger-router-controller: Users
+    put:
+      tags:
+      - users
+      summary: Update user's equipment based on his/her id.
+      operationId: usersIdEquipmentPUT
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user whose equipment is to be updated.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Equipment model
+        content:
+          application/json:
+            schema:
+              type: array
+              example:
+              - dumbell
+              - barbel
+              items:
+                type: string
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Resource not found
+      security:
+      - JWTbearerAuth: []
+      x-swagger-router-controller: Users
+  /foods:
+    get:
+      tags:
+      - foods
+      summary: Get all the food recipes stored in the system.
+      operationId: foodsGET
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/food'
+                x-content-type: application/json
+      x-swagger-router-controller: Foods
+    post:
+      tags:
+      - foods
+      summary: Add a new food recipe in the system.
+      operationId: foodsPOST
+      requestBody:
+        description: New food recipe's information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/food'
+        required: true
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/food'
+        "400":
+          description: Bad input parameter
+        "405":
+          description: Invalid input
+      security:
+      - JWTbearerAuth: []
+      x-swagger-router-controller: Foods
+  /foods/{id}:
+    get:
+      tags:
+      - foods
+      summary: Get a food recipe using its id in the system.
+      operationId: foodsIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The id of the food to be received.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/food'
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Food not found
+      x-swagger-router-controller: Foods
+    put:
+      tags:
+      - foods
+      summary: Update a food recipe based on its id.
+      operationId: foodsIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The id of the food to be updated.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Food model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/food'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Food not found
+      security:
+      - JWTbearerAuth: []
+      x-swagger-router-controller: Foods
+    delete:
+      tags:
+      - foods
+      summary: Delete a food recipe based on its id.
+      operationId: foodsIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The id of the food to be deleted.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/food'
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Food not found
+      x-swagger-router-controller: Foods
+  /exercises:
+    get:
+      tags:
+      - exercises
+      summary: Get all the exercises stored in the system.
+      operationId: exercisesGET
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/exercise'
+                x-content-type: application/json
+      x-swagger-router-controller: Exercises
+    post:
+      tags:
+      - exercises
+      summary: Add a new exercise to the system.
+      operationId: exercisesPOST
+      requestBody:
+        description: New exercise's information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/exercise'
+        required: true
+      responses:
+        "201":
+          description: New exercise added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exercise'
+        "400":
+          description: Bad input parameter
+        "405":
+          description: Invalid input
+      security:
+      - JWTbearerAuth: []
+      x-swagger-router-controller: Exercises
+  /exercises/{id}:
+    get:
+      tags:
+      - exercises
+      summary: Get the exercise using its id stored in the system.
+      operationId: exercisesIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The id of the exercise to be received.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/food'
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Food not found
+      x-swagger-router-controller: Exercises
+    put:
+      tags:
+      - exercises
+      summary: Update an exercise given its id in the system
+      operationId: exercisesIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The id of the food to be updated.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Exercise model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/exercise'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exercise'
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Exercise not found
+      security:
+      - JWTbearerAuth: []
+      x-swagger-router-controller: Exercises
+    delete:
+      tags:
+      - exercises
+      summary: Delete an exercise given its id in the system
+      operationId: exercisesIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The id of the exercise to be deleted.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exercise'
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Exercise not found
+      x-swagger-router-controller: Exercises
+  /food_recommendations/{userId}:
+    get:
+      tags:
+      - recommendations
+      summary: "Using the user's id, get a food recommendation based on his statistics."
+      operationId: food_recommendationsUserIdGET
+      parameters:
+      - name: userId
+        in: path
+        description: The id of the user getting a recommendation.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/food'
+                x-content-type: application/json
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Food not found
+      x-swagger-router-controller: Recommendations
+  /workout_recommendations/{userId}:
+    get:
+      tags:
+      - recommendations
+      summary: "Using the user's id, get a workout recommendation based on his statistics."
+      operationId: workout_recommendationsUserIdGET
+      parameters:
+      - name: userId
+        in: path
+        description: The id of the user getting a recommendation.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/workout'
+                x-content-type: application/json
+        "400":
+          description: Bad input parameter
+        "404":
+          description: Workout not found
+      x-swagger-router-controller: Recommendations
+  /search/food:
+    get:
+      tags:
+      - search
+      summary: Find a food recipes with the desired ingredients.
+      operationId: searchFoodGET
+      parameters:
+      - name: ingredient
+        in: query
+        description: The ingredient of a food recipe.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/food'
+                x-content-type: application/json
+        "400":
+          description: Bad input parameter
+        "404":
+          description: No results found
+      x-swagger-router-controller: Search
+  /search/exercises:
+    get:
+      tags:
+      - search
+      summary: Find an exercise by name.
+      operationId: searchExercisesGET
+      parameters:
+      - name: name
+        in: query
+        description: The name of the exercise to be found.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/exercise'
+                x-content-type: application/json
+        "400":
+          description: Bad input parameter
+        "404":
+          description: No results found
+      x-swagger-router-controller: Search
+components:
+  schemas:
+    newUser:
+      properties:
+        email:
+          type: string
+          example: johndoe@gmail.com
+        password:
+          type: string
+          example: $FJgkrkgk&^d
+    user:
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          example: johndoe@gmail.com
+        age:
+          type: integer
+          example: 23
+        gender:
+          type: string
+          example: male
+          enum:
+          - male
+          - female
+        height:
+          type: integer
+          example: 185
+        weight:
+          type: number
+          example: 83
+        measurements:
+          $ref: '#/components/schemas/measurements'
+        level:
+          type: string
+          example: intermediate
+          enum:
+          - beginner
+          - intermediate
+          - advanced
+        equipment:
+          type: array
+          example:
+          - dumbell
+          - barbel
+          items:
+            type: string
+        statistics:
+          $ref: '#/components/schemas/statistics'
+      example:
+        gender: male
+        level: intermediate
+        weight: 83
+        equipment:
+        - dumbell
+        - barbel
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        email: johndoe@gmail.com
+        age: 23
+        height: 185
+        measurements:
+          chest: 120.3
+          hips: 101.2
+          thigh: 60
+          abdomen: 89.6
+          biceps: 40.3
+        statistics:
+          bmr: 1900
+          fat: 14.5
+          bmi: 24
+    measurements:
+      properties:
+        chest:
+          type: number
+          example: 120.3
+        abdomen:
+          type: number
+          example: 89.6
+        hips:
+          type: number
+          example: 101.2
+        thigh:
+          type: number
+          example: 60
+        biceps:
+          type: number
+          example: 40.3
+      example:
+        chest: 120.3
+        hips: 101.2
+        thigh: 60
+        abdomen: 89.6
+        biceps: 40.3
+    statistics:
+      properties:
+        bmi:
+          type: number
+          example: 24
+        bmr:
+          type: number
+          example: 1900
+        fat:
+          type: number
+          example: 14.5
+      example:
+        bmr: 1900
+        fat: 14.5
+        bmi: 24
+    food:
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Chicken curry
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/ingredient'
+        execution:
+          type: string
+          example: Heat the oil in a flameproof casserole dish or large frying pan
+            over a medium...
+      example:
+        execution: Heat the oil in a flameproof casserole dish or large frying pan
+          over a medium...
+        name: Chicken curry
+        ingredients:
+        - amount: 600
+          name: Chicken breast
+          type: gr
+        - amount: 600
+          name: Chicken breast
+          type: gr
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+    ingredient:
+      properties:
+        name:
+          type: string
+          example: Chicken breast
+        amount:
+          type: number
+          example: 600
+        type:
+          type: string
+          example: gr
+      example:
+        amount: 600
+        name: Chicken breast
+        type: gr
+    exercise:
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Pull ups
+        type:
+          type: string
+          example: pull
+          enum:
+          - pull
+          - push
+          - legs
+        video:
+          type: string
+          example: https://cdn.knitness/exercises/fkgkrkg459
+        execution:
+          type: string
+          example: Place your arms shoulder-width apart
+      example:
+        execution: Place your arms shoulder-width apart
+        name: Pull ups
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        video: https://cdn.knitness/exercises/fkgkrkg459
+        type: pull
+    workout:
+      properties:
+        name:
+          type: string
+          example: Intermediate pull workout
+        exercises:
+          type: array
+          items:
+            $ref: '#/components/schemas/exercise'
+      example:
+        exercises:
+        - execution: Place your arms shoulder-width apart
+          name: Pull ups
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          video: https://cdn.knitness/exercises/fkgkrkg459
+          type: pull
+        - execution: Place your arms shoulder-width apart
+          name: Pull ups
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          video: https://cdn.knitness/exercises/fkgkrkg459
+          type: pull
+        name: Intermediate pull workout
+  securitySchemes:
+    JWTbearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
