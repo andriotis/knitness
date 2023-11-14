@@ -4,25 +4,29 @@ info:
   description: API documentation for Knitness app
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/SoftwareTechnology/Knitness/1.0.0
-  description: SwaggerHub API Auto Mocking
-- url: https://virtserver.swaggerhub.com/SoftwareTechnology/Knitness/1.0.0
+  - url: https://virtserver.swaggerhub.com/SoftwareTechnology/Knitness/1.0.0
+    description: SwaggerHub API Auto Mocking
+  - url: https://localhost:8080
+    description: Localhost server
+  - url: https://knitness-production.up.railway.app
+    description: RailWay server
+
 tags:
-- name: users
-  description: User specific requests
-- name: foods
-  description: Food specific requests
-- name: exercises
-  description: Exercise specific requests
-- name: recommendations
-  description: Recommendations specific requests
-- name: search
-  description: Search specific requests
+  - name: users
+    description: User specific requests
+  - name: foods
+    description: Food specific requests
+  - name: exercises
+    description: Exercise specific requests
+  - name: recommendations
+    description: Recommendations specific requests
+  - name: search
+    description: Search specific requests
 paths:
   /users:
     post:
       tags:
-      - users
+        - users
       summary: Add a new user to the system.
       description: FR*.
       operationId: usersPOST
@@ -31,7 +35,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/newUser'
+              $ref: "#/components/schemas/newUser"
         required: true
       responses:
         "201":
@@ -39,64 +43,64 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
+                $ref: "#/components/schemas/user"
         "400":
           description: Bad input parameter
         "405":
           description: Invalid input
       security:
-      - JWTbearerAuth: []
+        - JWTbearerAuth: []
       x-swagger-router-controller: Users
   /users/{id}:
     get:
       tags:
-      - users
+        - users
       summary: Retrieve a user's info using its id.
       description: FR*.
       operationId: usersIdGET
       parameters:
-      - name: id
-        in: path
-        description: The id of the user whose information are to be received.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the user whose information are to be received.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
+                $ref: "#/components/schemas/user"
         "400":
           description: Bad input parameter
         "404":
           description: Issue not found
       security:
-      - JWTbearerAuth: []
+        - JWTbearerAuth: []
       x-swagger-router-controller: Users
     put:
       tags:
-      - users
+        - users
       summary: Update user based on his/her id.
       operationId: usersIdPUT
       parameters:
-      - name: id
-        in: path
-        description: The id of the user whose information are to be updated.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the user whose information are to be updated.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       requestBody:
         description: User model
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/user'
+              $ref: "#/components/schemas/user"
         required: true
       responses:
         "200":
@@ -104,28 +108,28 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
+                $ref: "#/components/schemas/user"
         "400":
           description: Bad input parameter
         "404":
           description: Issue not found
       security:
-      - JWTbearerAuth: []
+        - JWTbearerAuth: []
       x-swagger-router-controller: Users
     delete:
       tags:
-      - users
+        - users
       summary: Delete a user based on his/her id.
       operationId: usersIdDELETE
       parameters:
-      - name: id
-        in: path
-        description: The id of the user to be deleted.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the user to be deleted.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
@@ -134,52 +138,52 @@ paths:
         "404":
           description: User not found
       security:
-      - JWTbearerAuth: []
+        - JWTbearerAuth: []
       x-swagger-router-controller: Users
   /users/{id}/stats:
     get:
       tags:
-      - users
+        - users
       summary: Receive user's statistics based on his/her id.
       operationId: usersIdStatsGET
       parameters:
-      - name: id
-        in: path
-        description: The id of the user whose statistics are to be received.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the user whose statistics are to be received.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/statistics'
+                $ref: "#/components/schemas/statistics"
         "400":
           description: Bad input parameter
         "404":
           description: Resource not found
       security:
-      - JWTbearerAuth: []
+        - JWTbearerAuth: []
       x-swagger-router-controller: Users
   /users/{id}/equipment:
     get:
       tags:
-      - users
+        - users
       summary: Get user's equipment based on his/her id.
       operationId: usersIdEquipmentGET
       parameters:
-      - name: id
-        in: path
-        description: The id of the user whose equipment is to be received.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the user whose equipment is to be received.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
@@ -188,8 +192,8 @@ paths:
               schema:
                 type: array
                 example:
-                - dumbell
-                - barbel
+                  - dumbell
+                  - barbel
                 items:
                   type: string
                 x-content-type: application/json
@@ -198,22 +202,22 @@ paths:
         "404":
           description: Issue not found
       security:
-      - JWTbearerAuth: []
+        - JWTbearerAuth: []
       x-swagger-router-controller: Users
     put:
       tags:
-      - users
+        - users
       summary: Update user's equipment based on his/her id.
       operationId: usersIdEquipmentPUT
       parameters:
-      - name: id
-        in: path
-        description: The id of the user whose equipment is to be updated.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the user whose equipment is to be updated.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       requestBody:
         description: Equipment model
         content:
@@ -221,8 +225,8 @@ paths:
             schema:
               type: array
               example:
-              - dumbell
-              - barbel
+                - dumbell
+                - barbel
               items:
                 type: string
         required: true
@@ -232,18 +236,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
+                $ref: "#/components/schemas/user"
         "400":
           description: Bad input parameter
         "404":
           description: Resource not found
       security:
-      - JWTbearerAuth: []
+        - JWTbearerAuth: []
       x-swagger-router-controller: Users
   /foods:
     get:
       tags:
-      - foods
+        - foods
       summary: Get all the food recipes stored in the system.
       operationId: foodsGET
       responses:
@@ -254,12 +258,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/food'
+                  $ref: "#/components/schemas/food"
                 x-content-type: application/json
       x-swagger-router-controller: Foods
     post:
       tags:
-      - foods
+        - foods
       summary: Add a new food recipe in the system.
       operationId: foodsPOST
       requestBody:
@@ -267,7 +271,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/food'
+              $ref: "#/components/schemas/food"
         required: true
       responses:
         "201":
@@ -275,36 +279,36 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/food'
+                $ref: "#/components/schemas/food"
         "400":
           description: Bad input parameter
         "405":
           description: Invalid input
       security:
-      - JWTbearerAuth: []
+        - JWTbearerAuth: []
       x-swagger-router-controller: Foods
   /foods/{id}:
     get:
       tags:
-      - foods
+        - foods
       summary: Get a food recipe using its id in the system.
       operationId: foodsIdGET
       parameters:
-      - name: id
-        in: path
-        description: The id of the food to be received.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the food to be received.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/food'
+                $ref: "#/components/schemas/food"
         "400":
           description: Bad input parameter
         "404":
@@ -312,24 +316,24 @@ paths:
       x-swagger-router-controller: Foods
     put:
       tags:
-      - foods
+        - foods
       summary: Update a food recipe based on its id.
       operationId: foodsIdPUT
       parameters:
-      - name: id
-        in: path
-        description: The id of the food to be updated.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the food to be updated.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       requestBody:
         description: Food model
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/food'
+              $ref: "#/components/schemas/food"
         required: true
       responses:
         "200":
@@ -337,35 +341,35 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
+                $ref: "#/components/schemas/user"
         "400":
           description: Bad input parameter
         "404":
           description: Food not found
       security:
-      - JWTbearerAuth: []
+        - JWTbearerAuth: []
       x-swagger-router-controller: Foods
     delete:
       tags:
-      - foods
+        - foods
       summary: Delete a food recipe based on its id.
       operationId: foodsIdDELETE
       parameters:
-      - name: id
-        in: path
-        description: The id of the food to be deleted.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the food to be deleted.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/food'
+                $ref: "#/components/schemas/food"
         "400":
           description: Bad input parameter
         "404":
@@ -374,7 +378,7 @@ paths:
   /exercises:
     get:
       tags:
-      - exercises
+        - exercises
       summary: Get all the exercises stored in the system.
       operationId: exercisesGET
       responses:
@@ -385,12 +389,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/exercise'
+                  $ref: "#/components/schemas/exercise"
                 x-content-type: application/json
       x-swagger-router-controller: Exercises
     post:
       tags:
-      - exercises
+        - exercises
       summary: Add a new exercise to the system.
       operationId: exercisesPOST
       requestBody:
@@ -398,7 +402,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/exercise'
+              $ref: "#/components/schemas/exercise"
         required: true
       responses:
         "201":
@@ -406,36 +410,36 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/exercise'
+                $ref: "#/components/schemas/exercise"
         "400":
           description: Bad input parameter
         "405":
           description: Invalid input
       security:
-      - JWTbearerAuth: []
+        - JWTbearerAuth: []
       x-swagger-router-controller: Exercises
   /exercises/{id}:
     get:
       tags:
-      - exercises
+        - exercises
       summary: Get the exercise using its id stored in the system.
       operationId: exercisesIdGET
       parameters:
-      - name: id
-        in: path
-        description: The id of the exercise to be received.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the exercise to be received.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/food'
+                $ref: "#/components/schemas/food"
         "400":
           description: Bad input parameter
         "404":
@@ -443,24 +447,24 @@ paths:
       x-swagger-router-controller: Exercises
     put:
       tags:
-      - exercises
+        - exercises
       summary: Update an exercise given its id in the system
       operationId: exercisesIdPUT
       parameters:
-      - name: id
-        in: path
-        description: The id of the food to be updated.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the food to be updated.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       requestBody:
         description: Exercise model
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/exercise'
+              $ref: "#/components/schemas/exercise"
         required: true
       responses:
         "200":
@@ -468,35 +472,35 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/exercise'
+                $ref: "#/components/schemas/exercise"
         "400":
           description: Bad input parameter
         "404":
           description: Exercise not found
       security:
-      - JWTbearerAuth: []
+        - JWTbearerAuth: []
       x-swagger-router-controller: Exercises
     delete:
       tags:
-      - exercises
+        - exercises
       summary: Delete an exercise given its id in the system
       operationId: exercisesIdDELETE
       parameters:
-      - name: id
-        in: path
-        description: The id of the exercise to be deleted.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: The id of the exercise to be deleted.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/exercise'
+                $ref: "#/components/schemas/exercise"
         "400":
           description: Bad input parameter
         "404":
@@ -505,18 +509,18 @@ paths:
   /food_recommendations/{userId}:
     get:
       tags:
-      - recommendations
+        - recommendations
       summary: "Using the user's id, get a food recommendation based on his statistics."
       operationId: food_recommendationsUserIdGET
       parameters:
-      - name: userId
-        in: path
-        description: The id of the user getting a recommendation.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: userId
+          in: path
+          description: The id of the user getting a recommendation.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
@@ -525,7 +529,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/food'
+                  $ref: "#/components/schemas/food"
                 x-content-type: application/json
         "400":
           description: Bad input parameter
@@ -535,18 +539,18 @@ paths:
   /workout_recommendations/{userId}:
     get:
       tags:
-      - recommendations
+        - recommendations
       summary: "Using the user's id, get a workout recommendation based on his statistics."
       operationId: workout_recommendationsUserIdGET
       parameters:
-      - name: userId
-        in: path
-        description: The id of the user getting a recommendation.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: userId
+          in: path
+          description: The id of the user getting a recommendation.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
@@ -555,7 +559,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/workout'
+                  $ref: "#/components/schemas/workout"
                 x-content-type: application/json
         "400":
           description: Bad input parameter
@@ -565,18 +569,18 @@ paths:
   /search/food:
     get:
       tags:
-      - search
+        - search
       summary: Find a food recipes with the desired ingredients.
       operationId: searchFoodGET
       parameters:
-      - name: ingredient
-        in: query
-        description: The ingredient of a food recipe.
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: ingredient
+          in: query
+          description: The ingredient of a food recipe.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
@@ -585,7 +589,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/food'
+                  $ref: "#/components/schemas/food"
                 x-content-type: application/json
         "400":
           description: Bad input parameter
@@ -595,18 +599,18 @@ paths:
   /search/exercises:
     get:
       tags:
-      - search
+        - search
       summary: Find an exercise by name.
       operationId: searchExercisesGET
       parameters:
-      - name: name
-        in: query
-        description: The name of the exercise to be found.
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: name
+          in: query
+          description: The name of the exercise to be found.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
@@ -615,7 +619,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/exercise'
+                  $ref: "#/components/schemas/exercise"
                 x-content-type: application/json
         "400":
           description: Bad input parameter
@@ -647,8 +651,8 @@ components:
           type: string
           example: male
           enum:
-          - male
-          - female
+            - male
+            - female
         height:
           type: integer
           example: 185
@@ -656,30 +660,30 @@ components:
           type: number
           example: 83
         measurements:
-          $ref: '#/components/schemas/measurements'
+          $ref: "#/components/schemas/measurements"
         level:
           type: string
           example: intermediate
           enum:
-          - beginner
-          - intermediate
-          - advanced
+            - beginner
+            - intermediate
+            - advanced
         equipment:
           type: array
           example:
-          - dumbell
-          - barbel
+            - dumbell
+            - barbel
           items:
             type: string
         statistics:
-          $ref: '#/components/schemas/statistics'
+          $ref: "#/components/schemas/statistics"
       example:
         gender: male
         level: intermediate
         weight: 83
         equipment:
-        - dumbell
-        - barbel
+          - dumbell
+          - barbel
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         email: johndoe@gmail.com
         age: 23
@@ -743,22 +747,24 @@ components:
         ingredients:
           type: array
           items:
-            $ref: '#/components/schemas/ingredient'
+            $ref: "#/components/schemas/ingredient"
         execution:
           type: string
-          example: Heat the oil in a flameproof casserole dish or large frying pan
+          example:
+            Heat the oil in a flameproof casserole dish or large frying pan
             over a medium...
       example:
-        execution: Heat the oil in a flameproof casserole dish or large frying pan
+        execution:
+          Heat the oil in a flameproof casserole dish or large frying pan
           over a medium...
         name: Chicken curry
         ingredients:
-        - amount: 600
-          name: Chicken breast
-          type: gr
-        - amount: 600
-          name: Chicken breast
-          type: gr
+          - amount: 600
+            name: Chicken breast
+            type: gr
+          - amount: 600
+            name: Chicken breast
+            type: gr
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
     ingredient:
       properties:
@@ -787,9 +793,9 @@ components:
           type: string
           example: pull
           enum:
-          - pull
-          - push
-          - legs
+            - pull
+            - push
+            - legs
         video:
           type: string
           example: https://cdn.knitness/exercises/fkgkrkg459
@@ -810,19 +816,19 @@ components:
         exercises:
           type: array
           items:
-            $ref: '#/components/schemas/exercise'
+            $ref: "#/components/schemas/exercise"
       example:
         exercises:
-        - execution: Place your arms shoulder-width apart
-          name: Pull ups
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          video: https://cdn.knitness/exercises/fkgkrkg459
-          type: pull
-        - execution: Place your arms shoulder-width apart
-          name: Pull ups
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          video: https://cdn.knitness/exercises/fkgkrkg459
-          type: pull
+          - execution: Place your arms shoulder-width apart
+            name: Pull ups
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            video: https://cdn.knitness/exercises/fkgkrkg459
+            type: pull
+          - execution: Place your arms shoulder-width apart
+            name: Pull ups
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            video: https://cdn.knitness/exercises/fkgkrkg459
+            type: pull
         name: Intermediate pull workout
   securitySchemes:
     JWTbearerAuth:
